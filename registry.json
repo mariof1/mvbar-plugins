@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/mariof1/mvbar-plugins",
+  "plugins": [
+    {
+      "key": "missing-music",
+      "id": "mvbar.missing-music",
+      "name": "Missing Music",
+      "version": "1.2.0",
+      "description": "Find albums and tracks missing from an MVBar library with MusicBrainz, keep a wanted list, and optionally hand approved requests to an external service.",
+      "filename": "mvbar-missing-music.ndp",
+      "packageUrl": "https://raw.githubusercontent.com/mariof1/mvbar-plugins/main/dist/mvbar-missing-music.ndp",
+      "sha256": "b397b4f8b471c72f82e99103419a0a332f226485c519b684589fe8738a6649d9",
+      "size": 1397,
+      "homepage": "https://github.com/mariof1/mvbar-plugins/tree/main/plugins/missing-music"
+    }
+  ]
+}

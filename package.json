@@ -1,0 +1,13 @@
+{
+  "name": "mvbar-plugins",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "npm run build && git diff --exit-code -- dist registry.json"
+  },
+  "dependencies": {
+    "archiver": "8.0.0"
+  }
+}
