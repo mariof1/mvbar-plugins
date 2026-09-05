@@ -33,3 +33,7 @@ scripts/build.mjs                  deterministic package/registry builder
 ```
 
 The registry is deliberately small and static. MVBar still parses every downloaded `.ndp`, verifies its checksum and identity, and shows its requested permissions before enabling it.
+
+## Extension boundary
+
+Ordinary WebAssembly plugins can keep their executable behavior entirely in this repository. Missing Music currently uses MVBar's declarative extension API: its package owns the release version, manifest, configuration contract, permissions, and distribution, while MVBar supplies the constrained catalog/request capability and native UI. Those package changes can ship independently here; adding a new privileged host capability still requires an MVBar application release.

@@ -2,6 +2,8 @@
 
 Missing Music is a removable first-party MVBar plugin. It compares local artists, albums, and tracks with MusicBrainz, then keeps the gaps in a server-side wanted list. An optional external provider can receive approved request metadata automatically.
 
+The package is a declarative extension: this repository owns its versioned manifest, configuration contract, permissions, and distribution, while MVBar provides the constrained catalog/request implementation and native interface. Package releases do not require an MVBar repository commit; a feature that needs a new host capability still requires a compatible MVBar release.
+
 It does not download, store, import, or stream media. If an administrator or external provider later puts authorized media into an existing MVBar library, MVBar's normal library scanner discovers it independently.
 
 ## Quick start
