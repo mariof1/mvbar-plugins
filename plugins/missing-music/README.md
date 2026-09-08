@@ -26,11 +26,11 @@ With the plugin installed and enabled, open MVBar's normal search and enter at l
 - **Request song** adds the song to the Missing Music request queue and sends connected administrators a realtime alert containing its artist and title.
 - **Requested** means you already have an active request for that recording. Repeated requests, including simultaneous submissions, are prevented.
 
-Recording version details help distinguish live and alternate recordings. A song can be requested without an associated album. Administrators review song requests in the same queue as album requests; no download is started directly by search.
+Song search prefers main album recordings, falling back to EPs and then singles for the same song and artist. Live, remix, demo, acoustic, karaoke, edited, surround, and other alternate recordings are excluded, as are compilations and other secondary release types. Results are deduplicated by song and artist. Recordings without an identifiable album, EP, or single are omitted from search. This filtering requires an updated MVBar host; the package alone cannot change an older host. The request API still accepts standalone recordings. Administrators review song requests in the same queue as album requests; no download is started directly by search.
 
 ### Host compatibility
 
-Package **1.3.0** documents the song-search integration supplied by MVBar commit [`fb77692`](https://github.com/mariof1/mvbar/commit/fb77692) on `dev`. Use an MVBar build containing that commit or a later release that includes it. Updating only this package on an older host does not add the search UI or API; existing album/catalog features remain available. Older enabled packages also gain song search when their host is updated.
+Package **1.3.1** documents song search with standard-recording filtering supplied by MVBar commit [`61b5e11`](https://github.com/mariof1/mvbar/commit/61b5e11) on `dev`. Use an MVBar build containing that commit or a later release that includes it. Updating only this package on an older host does not add the search UI or API; existing album/catalog features remain available. Older enabled packages also gain song search when their host is updated.
 
 Install or update this package through **Admin → Plugins → Official MVBar plugins**. MVBar downloads it from this central repository; no manual package copying is needed.
 
