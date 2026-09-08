@@ -8,7 +8,7 @@ MVBar reads [`registry.json`](./registry.json) to discover updates. An administr
 
 | Plugin | Purpose | Documentation |
 | --- | --- | --- |
-| Missing Music | Compare a local library with MusicBrainz and maintain a wanted list. | [Setup and provider contract](./plugins/missing-music/README.md) |
+| Missing Music | Find missing albums and songs, request songs from search, and notify administrators. | [Setup, host compatibility, and provider contract](./plugins/missing-music/README.md) |
 
 ## Releasing an update
 

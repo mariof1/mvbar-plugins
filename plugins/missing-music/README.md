@@ -18,6 +18,22 @@ No files, command-line steps, API keys, or external services are required for th
 
 By default, the comparison includes albums and EPs while hiding common live, compilation, remix, DJ-mix, interview, and spoken variants. Both lists are editable in the plugin configuration.
 
+## Request a song from search
+
+With the plugin installed and enabled, open MVBar's normal search and enter at least three characters of a song title, optionally including the artist. The **Missing songs** section checks MusicBrainz while local search results remain available.
+
+- **In library** means a matching recording ID or title/performer was found in a library you can access.
+- **Request song** adds the song to the Missing Music request queue and sends connected administrators a realtime alert containing its artist and title.
+- **Requested** means you already have an active request for that recording. Repeated requests, including simultaneous submissions, are prevented.
+
+Recording version details help distinguish live and alternate recordings. A song can be requested without an associated album. Administrators review song requests in the same queue as album requests; no download is started directly by search.
+
+### Host compatibility
+
+Package **1.3.0** documents the song-search integration supplied by MVBar commit [`fb77692`](https://github.com/mariof1/mvbar/commit/fb77692) on `dev`. Use an MVBar build containing that commit or a later release that includes it. Updating only this package on an older host does not add the search UI or API; existing album/catalog features remain available. Older enabled packages also gain song search when their host is updated.
+
+Install or update this package through **Admin → Plugins → Official MVBar plugins**. MVBar downloads it from this central repository; no manual package copying is needed.
+
 ## Optional automatic provider
 
 Set **Request provider URL** only when you already have a compatible service that should receive approved requests. Add its bearer token if required. Enable **Allow a private-network provider** for a trusted HTTP(S) service on your LAN, such as `http://192.168.1.20:8080`.
@@ -43,6 +59,8 @@ MVBar sends `POST <base-url>/v1/requests` with an optional bearer token and this
   }
 }
 ```
+
+For song requests, `itemType` is `track`, `recordingId` is required, and `album`, `releaseGroupId`, and `releaseId` can be null. Providers must accept standalone recordings without requiring an album.
 
 The service returns:
 
@@ -77,6 +95,7 @@ Plugin state is held in the MVBar database. The installed `.ndp` package is held
 
 ## Troubleshooting
 
+- **Song search is missing:** check that the plugin is installed and enabled, enter at least three characters, and update the MVBar host to a build with the song-search integration described above.
 - **An artist asks for a match:** its local files do not contain a MusicBrainz artist ID. Choose the closest MusicBrainz result; use **Change match** later if needed.
 - **Too many unusual releases:** adjust **Release types** or **Exclude release variants** in Admin → Plugins.
 - **A request stays “On wanted list”:** this is expected without a provider. Handle it manually and select **Mark fulfilled**.
