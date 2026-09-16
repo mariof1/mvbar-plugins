@@ -12,7 +12,7 @@ MVBar reads [`registry.json`](./registry.json) to discover updates. An administr
 
 ## Releasing an update
 
-1. Change the plugin under `plugins/<key>` and bump its manifest version.
+1. Change the plugin under `plugins/<key>`, bump its manifest version, and put the same version in its `registry-entry.json` package filename (for example, `mvbar-missing-music-1.4.0.ndp`). Keep older packages in `dist` so a cached older registry still resolves to its original checksum.
 2. Run `npm install` once, then `npm run build`.
 3. Commit the source, `dist` package, and regenerated `registry.json` together.
 4. Push `main`. MVBar servers will see the new registry entry without an MVBar application release.

@@ -8,8 +8,8 @@
       "name": "Missing Music",
       "version": "1.4.0",
       "description": "Find missing albums and songs with MusicBrainz, request them from search, and manage administrator-reviewed Deezer staging on compatible MVBar hosts.",
-      "filename": "mvbar-missing-music.ndp",
-      "packageUrl": "https://raw.githubusercontent.com/mariof1/mvbar-plugins/main/dist/mvbar-missing-music.ndp",
+      "filename": "mvbar-missing-music-1.4.0.ndp",
+      "packageUrl": "https://raw.githubusercontent.com/mariof1/mvbar-plugins/main/dist/mvbar-missing-music-1.4.0.ndp",
       "sha256": "99730f13d2294916d35a7a8f930f4603a4b93d660a58b3de95807a35642ea747",
       "size": 1419,
       "homepage": "https://github.com/mariof1/mvbar-plugins/tree/main/plugins/missing-music"

@@ -69,6 +69,10 @@ for (const entry of directories) {
   if (path.basename(metadata.filename) !== metadata.filename || !metadata.filename.endsWith('.ndp')) {
     throw new Error(`Invalid package filename for ${entry.name}`);
   }
+  const manifest = JSON.parse(await fs.readFile(path.join(directory, 'manifest.json'), 'utf8'));
+  if (!metadata.filename.endsWith(`-${manifest.version}.ndp`)) {
+    throw new Error(`Package filename for ${entry.name} must include manifest version ${manifest.version}`);
+  }
   const built = await buildPackage(directory, metadata.filename);
   registryPlugins.push({
     key: metadata.key,
