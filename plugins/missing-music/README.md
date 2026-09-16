@@ -4,7 +4,7 @@ Missing Music is a removable first-party MVBar plugin. It compares local artists
 
 The package is a declarative extension: this repository owns its versioned manifest, configuration contract, permissions, and distribution, while MVBar provides the constrained catalog/request implementation and native interface. Package releases do not require an MVBar repository commit; a feature that needs a new host capability still requires a compatible MVBar release.
 
-It does not download, store, import, or stream media. If an administrator or external provider later puts authorized media into an existing MVBar library, MVBar's normal library scanner discovers it independently.
+The package does not receive media filesystem access or account credentials. On compatible MVBar hosts, an administrator can explicitly stage a matching Deezer song or album outside the music library, review it, and import it. MVBar's normal library scanner then discovers imported files.
 
 ## Quick start
 
@@ -28,9 +28,19 @@ With the plugin installed and enabled, open MVBar's normal search and enter at l
 
 Song search prefers main album recordings, falling back to EPs and then singles for the same song and artist. Live, remix, demo, acoustic, karaoke, edited, surround, and other alternate recordings are excluded, as are compilations and other secondary release types. Results are deduplicated by song and artist. Recordings without an identifiable album, EP, or single are omitted from search. This filtering requires an updated MVBar host; the package alone cannot change an older host. The request API still accepts standalone recordings. Administrators review song requests in the same queue as album requests; no download is started directly by search.
 
+## Browse an artist's missing albums
+
+Open **Missing Music** and search for a local or MusicBrainz artist. Choose an artist to compare the main albums and EPs against your library. An album already in the library can still be opened to find missing tracks; an incomplete album can be requested. Artist and album selections stay in the URL, so a link can be shared or reopened. Users can submit requests, while administrators can filter and search the queue, approve or reject requests, and remove obsolete ones.
+
+## Administrator Deezer staging
+
+On a compatible MVBar host, leave **Request provider URL** blank and configure `DEEZER_ARL`, `DEEZER_PYTHON`, and `DEEZER_DOWNLOAD_DIR` on the server. Install the Python packages in `api/requirements-deezer.txt` into the environment selected by `DEEZER_PYTHON`. `DEEZER_QUALITY` selects MP3 128 (`0`, default), MP3 320 (`1`), or FLAC (`2`), subject to account availability. Keep the staging directory private, writable by MVBar, and separate from the music library. Never put the account cookie in the plugin settings or browser.
+
+In the admin request queue, select **Find on Deezer**, check the exact artist, title, and album, then select **Stage song** or **Stage album**. Album staging checks the full track list, reports progress, and creates a ZIP only after every track succeeds. Download the staged song or ZIP, review and import it into your music library, then mark the request fulfilled. Staging does not start when a user searches or requests music. It is unavailable while an external request provider is configured. Use downloaded recordings only where you have the rights to retain them.
+
 ### Host compatibility
 
-Package **1.3.1** documents song search with standard-recording filtering supplied by MVBar commit [`61b5e11`](https://github.com/mariof1/mvbar/commit/61b5e11) on `dev`. Use an MVBar build containing that commit or a later release that includes it. Updating only this package on an older host does not add the search UI or API; existing album/catalog features remain available. Older enabled packages also gain song search when their host is updated.
+Package **1.4.0** documents artist album browsing, incomplete-album requests, queue improvements, and administrator Deezer staging supplied by MVBar commit [`b96b5a9`](https://github.com/mariof1/mvbar/commit/b96b5a9) on `dev`. Use a host build containing that commit or a later release that includes it. Updating this package on an older host does not add those host features; existing album/catalog features remain available. An older enabled package also gains new host features when MVBar is updated.
 
 Install or update this package through **Admin → Plugins → Official MVBar plugins**. MVBar downloads it from this central repository; no manual package copying is needed.
 
@@ -99,5 +109,7 @@ Plugin state is held in the MVBar database. The installed `.ndp` package is held
 - **An artist asks for a match:** its local files do not contain a MusicBrainz artist ID. Choose the closest MusicBrainz result; use **Change match** later if needed.
 - **Too many unusual releases:** adjust **Release types** or **Exclude release variants** in Admin → Plugins.
 - **A request stays “On wanted list”:** this is expected without a provider. Handle it manually and select **Mark fulfilled**.
+- **Deezer staging is unavailable:** use a compatible MVBar host, leave the external request provider unset, install the Python requirements, and configure the server-side ARL, Python executable, and writable staging directory.
+- **An album is already in the library:** open it in Missing Music to inspect its tracks. You can request it if one or more tracks are missing.
 - **The navigation item is missing:** ensure the package is installed, globally enabled by `PLUGINS_ENABLED=true`, and enabled on its Admin → Plugins card.
 - **MusicBrainz is temporarily unavailable:** wait briefly and retry. MVBar rate-limits calls and caches successful catalog responses for 24 hours.
