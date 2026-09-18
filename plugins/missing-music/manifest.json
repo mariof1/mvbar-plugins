@@ -2,8 +2,8 @@
   "id": "mvbar.missing-music",
   "name": "Missing Music",
   "author": "MVBar",
-  "version": "1.6.0",
-  "description": "Use Deezer as the primary catalog to find missing albums and songs, detect incomplete local albums, manage requests, and optionally stage exact Deezer items automatically.",
+  "version": "1.7.0",
+  "description": "Use Deezer to find missing albums and songs, import curated playlists with artwork, detect incomplete local albums, manage requests, and optionally stage exact Deezer items automatically.",
   "homepage": "https://github.com/mariof1/mvbar-plugins/tree/main/plugins/missing-music",
   "config": {
     "schema": {
@@ -36,7 +36,7 @@
         "autoDownloadDeezer": {
           "type": "boolean",
           "title": "Auto-download from Deezer",
-          "description": "When administrator approval is off and no external request provider is configured, automatically stage the exact Deezer album or track selected by each new request.",
+          "description": "When administrator approval is off and no external request provider is configured, automatically stage exact Deezer albums, tracks, and playlist-import items.",
           "default": false
         },
         "preferSpecialEditions": {
@@ -67,17 +67,17 @@
   },
   "permissions": {
     "config": {
-      "reason": "Read the administrator-supplied request-provider and MusicBrainz settings."
+      "reason": "Read the administrator-supplied request-provider and Missing Music settings."
     },
     "kvstore": {
-      "reason": "Cache MusicBrainz catalog responses to respect its public API rate limit.",
+      "reason": "Store plugin-scoped catalog caches and saved artist mappings.",
       "maxSize": "32 MB"
     },
     "catalog": {
-      "reason": "Read MusicBrainz identifiers and titles from enabled MVBar music libraries for comparison."
+      "reason": "Read enabled MVBar music libraries so Deezer artists, albums, tracks, and playlist items can be compared with local music."
     },
     "requests": {
-      "reason": "Store request state and hand approved metadata-only requests to the configured external service."
+      "reason": "Store request and Deezer import state and hand approved metadata-only requests to the configured external service."
     }
   },
   "mvbar": {
