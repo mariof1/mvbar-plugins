@@ -10,7 +10,7 @@ The package does not receive media filesystem access or account credentials. On 
 
 1. Open **Admin → Plugins**.
 2. Find **Missing Music** under **Official MVBar plugins** and select **Install with one click**.
-3. Review the read-only catalog/request permissions and select **Review & enable**.
+3. Review the declared Missing Music capabilities and select **Review & enable**. Current releases can read your enabled music catalog, create request records and user playlists, stage Deezer media in the server-configured Missing Music library, and grant the requesting user access to that staging library.
 4. Open **Missing Music** from the main navigation.
 5. Pick a local artist and choose the correct Deezer artist match. MVBar remembers the Deezer artist ID for that user so future catalog checks open directly.
 
@@ -53,7 +53,7 @@ New Deezer-backed requests already contain the exact Deezer IDs selected in the 
 
 ### Host compatibility
 
-Package **1.7.0** adds Deezer playlist discovery/import, compact artwork cards, persistent import progress, reuse of existing local tracks, automatic staging of missing tracks into their normal Artist/Album folders, and creation of a same-name MVBar playlist with Deezer artwork. These host features require MVBar `dev` commit `7483d6c63eb7784d25981e459c451e8d993221fd` or a later build containing the playlist-import commits. Package **1.6.0** introduced the Deezer-first artist/album/song catalog and partial-album matching. Updating only the plugin package on an older MVBar host does not add the new playlist endpoints.
+Package **1.8.0** updates the permission model so Deezer staging, playlist creation, and staging-library access are explicitly reviewed by administrators. It also refreshes the official offline/bundled package in compatible MVBar builds. The Deezer playlist and catalog features introduced in 1.7.x still require a recent MVBar host; updating only the plugin package on an older host does not add missing host endpoints.
 
 Install or update this package through **Admin → Plugins → Official MVBar plugins**. MVBar downloads it from this central repository; no manual package copying is needed.
 
@@ -110,9 +110,24 @@ A failure response can include an `error` string. No media URL or file is accept
 
 Public providers must use HTTPS. Private or loopback providers require the administrator to enable the explicit private-network option. Redirects are rejected, and the token is sent only to the configured origin.
 
+## Permissions in 1.8.0
+
+Missing Music **1.8.0 intentionally changes the plugin permission fingerprint**. When updating from 1.7.x, MVBar disables the plugin after installation until an administrator reviews and enables it again. This is expected.
+
+The package now declares the host capabilities that the Deezer-first implementation actually uses:
+
+- **Catalog** — read metadata from music libraries the user is allowed to access.
+- **Requests** — create and manage Missing Music request records, including hidden batch records used for playlist imports.
+- **Playlists** — create and populate user-owned MVBar playlists from imported Deezer playlists.
+- **Staging** — download and stage Deezer media in the server-configured Missing Music staging library.
+- **Library access** — grant the requesting user access to the Missing Music staging library so staged tracks can appear in that user's library and imported playlists.
+- **Config / KV store** — read Missing Music settings and persist saved Deezer artist mappings / compatibility cache data.
+
+These are Missing Music host-extension capabilities. The inert plugin WASM still does not receive arbitrary filesystem access, account cookies, or unrestricted network access.
+
 ## Lifecycle and updates
 
-MVBar discovers official releases from the public [`mvbar-plugins`](https://github.com/mariof1/mvbar-plugins) registry. Updates can therefore be published without rebuilding MVBar itself. Every downloaded package is checksum-verified and parsed by MVBar before installation.
+MVBar discovers official releases from the public [`mvbar-plugins`](https://github.com/mariof1/mvbar-plugins) registry. Every downloaded package is checksum-verified and parsed by MVBar before installation. A package update that changes permissions, including 1.8.0, is installed disabled and requires administrator review before it can run again.
 
 Disabling the plugin hides the feature and stops provider handoffs. Removing it deletes its request records, saved Deezer artist matches, and legacy MusicBrainz cache through the normal plugin cascade. It never removes library media.
 
