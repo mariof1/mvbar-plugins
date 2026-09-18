@@ -16,6 +16,9 @@ The package does not receive media filesystem access or account credentials. On 
 
 No files, command-line steps, API keys, or external services are required for this wanted-list mode. Users can request missing albums or individual tracks. Administrators can approve, reject, retry, delete, or manually mark requests fulfilled.
 
+If **Require administrator approval** is disabled, compatible MVBar hosts also expose **Auto-download from Deezer**. When enabled, a new request is approved immediately, matched against Deezer using the same strict artist/title checks as the manual workflow, and staged automatically. This mode requires Deezer staging to be configured on the MVBar server and cannot be combined with an external request provider.
+
+
 By default, the comparison includes albums and EPs while hiding common live, compilation, remix, DJ-mix, interview, and spoken variants. Both lists are editable in the plugin configuration.
 
 ## Request a song from search
