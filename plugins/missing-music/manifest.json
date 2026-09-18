@@ -2,8 +2,8 @@
   "id": "mvbar.missing-music",
   "name": "Missing Music",
   "author": "MVBar",
-  "version": "1.5.0",
-  "description": "Find missing albums and songs with MusicBrainz, manage requests, and optionally stage high-confidence Deezer matches automatically on compatible MVBar hosts.",
+  "version": "1.6.0",
+  "description": "Use Deezer as the primary catalog to find missing albums and songs, detect incomplete local albums, manage requests, and optionally stage exact Deezer items automatically.",
   "homepage": "https://github.com/mariof1/mvbar-plugins/tree/main/plugins/missing-music",
   "config": {
     "schema": {
@@ -36,7 +36,13 @@
         "autoDownloadDeezer": {
           "type": "boolean",
           "title": "Auto-download from Deezer",
-          "description": "When administrator approval is off and no external request provider is configured, automatically stage the highest-confidence Deezer match for each new request.",
+          "description": "When administrator approval is off and no external request provider is configured, automatically stage the exact Deezer album or track selected by each new request.",
+          "default": false
+        },
+        "preferSpecialEditions": {
+          "type": "boolean",
+          "title": "Prefer special editions",
+          "description": "When Deezer lists several editions with the same base album title, prefer Deluxe, Expanded, Extended, or similar editions instead of the standard edition.",
           "default": false
         },
         "musicBrainzContact": {
@@ -47,13 +53,13 @@
         "releaseGroupTypes": {
           "type": "string",
           "title": "Release types",
-          "description": "Comma-separated MusicBrainz release-group types to compare.",
+          "description": "Comma-separated Deezer record types to compare, for example Album,EP,Single.",
           "default": "Album,EP"
         },
         "excludedSecondaryTypes": {
           "type": "string",
           "title": "Exclude release variants",
-          "description": "Comma-separated secondary types to hide so live, remix, compilation, and spoken releases do not overwhelm results. Leave blank to show everything.",
+          "description": "Comma-separated Deezer-derived release variants to hide. Common values include Compilation,Live,Remix,Soundtrack.",
           "default": "Compilation,Live,Remix,DJ-mix,Mixtape/Street,Interview,Audio drama,Spokenword,Soundtrack,Audiobook,Demo"
         }
       }
