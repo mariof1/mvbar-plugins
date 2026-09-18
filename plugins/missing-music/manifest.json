@@ -67,17 +67,17 @@
   },
   "permissions": {
     "config": {
-      "reason": "Read the administrator-supplied request-provider and Missing Music settings."
+      "reason": "Read the administrator-supplied request-provider and MusicBrainz settings."
     },
     "kvstore": {
-      "reason": "Store plugin-scoped catalog caches and saved artist mappings.",
+      "reason": "Cache MusicBrainz catalog responses to respect its public API rate limit.",
       "maxSize": "32 MB"
     },
     "catalog": {
-      "reason": "Read enabled MVBar music libraries so Deezer artists, albums, tracks, and playlist items can be compared with local music."
+      "reason": "Read MusicBrainz identifiers and titles from enabled MVBar music libraries for comparison."
     },
     "requests": {
-      "reason": "Store request and Deezer import state and hand approved metadata-only requests to the configured external service."
+      "reason": "Store request state and hand approved metadata-only requests to the configured external service."
     }
   },
   "mvbar": {
