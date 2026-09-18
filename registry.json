@@ -6,12 +6,12 @@
       "key": "missing-music",
       "id": "mvbar.missing-music",
       "name": "Missing Music",
-      "version": "1.6.0",
-      "description": "Use Deezer as the primary catalog to find missing albums and songs, detect incomplete local albums, manage requests, and optionally stage exact Deezer items automatically.",
-      "filename": "mvbar-missing-music-1.6.0.ndp",
-      "packageUrl": "https://raw.githubusercontent.com/mariof1/mvbar-plugins/main/dist/mvbar-missing-music-1.6.0.ndp",
-      "sha256": "21e19da83183d6db57715fadd39e164b5092a4003f13744244110671c836b334",
-      "size": 1598,
+      "version": "1.7.0",
+      "description": "Use Deezer to find missing albums and songs, import curated playlists with artwork, detect incomplete local albums, manage requests, and optionally stage exact Deezer items automatically.",
+      "filename": "mvbar-missing-music-1.7.0.ndp",
+      "packageUrl": "https://raw.githubusercontent.com/mariof1/mvbar-plugins/main/dist/mvbar-missing-music-1.7.0.ndp",
+      "sha256": "cc88cccfef4f6a21017bd059d603cbc847b5248c715691aa1c9ab73d2238b0e5",
+      "size": 1605,
       "homepage": "https://github.com/mariof1/mvbar-plugins/tree/main/plugins/missing-music"
     }
   ]
