@@ -2,8 +2,8 @@
   "id": "mvbar.missing-music",
   "name": "Missing Music",
   "author": "MVBar",
-  "version": "1.4.0",
-  "description": "Find missing albums and songs with MusicBrainz, request them from search, and manage administrator-reviewed Deezer staging on compatible MVBar hosts.",
+  "version": "1.5.0",
+  "description": "Find missing albums and songs with MusicBrainz, manage requests, and optionally stage high-confidence Deezer matches automatically on compatible MVBar hosts.",
   "homepage": "https://github.com/mariof1/mvbar-plugins/tree/main/plugins/missing-music",
   "config": {
     "schema": {
@@ -32,6 +32,12 @@
           "title": "Require administrator approval",
           "description": "Keep new user requests pending until an administrator approves them.",
           "default": true
+        },
+        "autoDownloadDeezer": {
+          "type": "boolean",
+          "title": "Auto-download from Deezer",
+          "description": "When administrator approval is off and no external request provider is configured, automatically stage the highest-confidence Deezer match for each new request.",
+          "default": false
         },
         "musicBrainzContact": {
           "type": "string",
