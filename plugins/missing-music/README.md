@@ -53,7 +53,7 @@ New Deezer-backed requests already contain the exact Deezer IDs selected in the 
 
 ### Host compatibility
 
-Package **1.8.0** updates the permission model so Deezer staging, playlist creation, and staging-library access are explicitly reviewed by administrators. It also refreshes the official offline/bundled package in compatible MVBar builds. The Deezer playlist and catalog features introduced in 1.7.x still require a recent MVBar host; updating only the plugin package on an older host does not add missing host endpoints.
+Package **1.8.0** updates the permission model so Deezer staging, playlist creation, and staging-library access are explicitly reviewed by administrators. Use MVBar `dev` commit `710df0d917a72bc2ec1f5b3a66a8c0c9bc0f293f` or a later build so those capability keys are shown as supported during review. Compatible builds also bundle 1.8.0 as the offline fallback. The Deezer playlist and catalog features introduced in 1.7.x still require a recent MVBar host; updating only the plugin package on an older host does not add missing host endpoints.
 
 Install or update this package through **Admin → Plugins → Official MVBar plugins**. MVBar downloads it from this central repository; no manual package copying is needed.
 
