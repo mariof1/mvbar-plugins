@@ -35,6 +35,16 @@ Deezer song results carry the Deezer artist, album, and track IDs into the reque
 
 Open **Missing Music** and search for a local or Deezer artist. Choose the correct Deezer artist once, then compare its main albums and EPs with your local library. Album titles are normalized so common Deluxe/Remaster/Expanded suffixes can still match the local album, while genuinely different releases such as Live albums remain separate. Partial albums stay in the **Missing** view. Expanding one compares every Deezer track with local files and shows which songs are present or missing, including match confidence. Users can request the full album or only individual missing tracks.
 
+## Import a Deezer playlist
+
+Open **Missing Music → Deezer Playlists** to browse featured Deezer playlists or search by name, for example **Vitamin D**. Results appear as compact artwork cards showing the playlist name, creator, and track count.
+
+Selecting **Import playlist** creates a normal MVBar playlist for the current user with the same name and Deezer artwork. MVBar reuses matching tracks that are already in an accessible local library and stages only the missing tracks. Downloaded tracks still live in the normal Missing Music staging layout under their own **Artist/Album/** folders; no playlist-specific media folder is created.
+
+The import runs as a durable background job and resumes after server restarts. The Missing Music page shows live **added/total** progress, while the normal **Playlists** page displays the Deezer artwork and fills in tracks as they are discovered by the library scanner. Repeated tracks in the source Deezer playlist are deduplicated because MVBar playlists store each track once. Imports currently support up to 1,000 Deezer tracks.
+
+Administrators can explicitly start a playlist import whenever Deezer staging is configured and no external request provider is active. For ordinary users, **Require administrator approval** must be disabled and **Auto-download from Deezer** enabled so a single playlist import cannot create hundreds of approval prompts. The generated per-track batch requests stay hidden from the normal Missing Music request queue.
+
 ## Administrator Deezer staging
 
 On a compatible MVBar host, leave **Request provider URL** blank. For Docker Compose, add `DEEZER_ARL` to the private `.env` file and run `docker compose up -d --build`. The image includes Python, streamrip, and the download helper; Compose uses a persistent `deezer_staging` volume. There is no need to install Python inside the running container or set `DEEZER_PYTHON`. For a standalone host, install `api/requirements-deezer.txt` into a Python environment and set `DEEZER_ARL`, `DEEZER_PYTHON`, and `DEEZER_DOWNLOAD_DIR` on the server. `DEEZER_QUALITY` selects MP3 128 (`0`, default), MP3 320 (`1`), or FLAC (`2`), subject to account availability. Keep the staging directory private, writable by MVBar, and separate from the music library. Never put the account cookie in the plugin settings or browser.
@@ -43,7 +53,7 @@ New Deezer-backed requests already contain the exact Deezer IDs selected in the 
 
 ### Host compatibility
 
-Package **1.6.0** uses Deezer as the primary Missing Music catalog, adds Deezer artist mappings, partial-album track matching without requiring ISRC or MusicBrainz IDs, exact Deezer request identifiers, special-edition preference, and direct automatic staging. These host features require MVBar `dev` commit `6f570adb6feb3462d444056a94a28720e433bf23` or a later release containing it. Updating only the plugin package on an older MVBar host does not add the new host endpoints.
+Package **1.7.0** adds Deezer playlist discovery/import, compact artwork cards, persistent import progress, reuse of existing local tracks, automatic staging of missing tracks into their normal Artist/Album folders, and creation of a same-name MVBar playlist with Deezer artwork. These host features require MVBar `dev` commit `7483d6c63eb7784d25981e459c451e8d993221fd` or a later build containing the playlist-import commits. Package **1.6.0** introduced the Deezer-first artist/album/song catalog and partial-album matching. Updating only the plugin package on an older MVBar host does not add the new playlist endpoints.
 
 Install or update this package through **Admin → Plugins → Official MVBar plugins**. MVBar downloads it from this central repository; no manual package copying is needed.
 
@@ -120,5 +130,7 @@ Plugin state is held in the MVBar database. The installed `.ndp` package is held
 - **A request stays “On wanted list”:** this is expected without a provider. Handle it manually and select **Mark fulfilled**.
 - **Deezer staging is unavailable:** use a compatible MVBar host, leave the external request provider unset, install the Python requirements, and configure the server-side ARL, Python executable, and writable staging directory.
 - **An album is already in the library:** open it in Missing Music to inspect its tracks. You can request it if one or more tracks are missing.
+- **A Deezer playlist will not import:** make sure no external request provider is configured and Deezer staging is available. Non-administrator users also need **Require administrator approval** off and **Auto-download from Deezer** on.
+- **An imported playlist has fewer tracks than Deezer:** duplicate Deezer track IDs are intentionally collapsed because an MVBar playlist can contain a given track only once. Failed downloads are shown as a partial import.
 - **The navigation item is missing:** ensure the package is installed, globally enabled by `PLUGINS_ENABLED=true`, and enabled on its Admin → Plugins card.
 - **Deezer catalog lookup fails:** retry after a short delay and confirm the MVBar host can reach `api.deezer.com`. Deezer catalog discovery does not require the ARL; the ARL is only required for staging/downloads.
