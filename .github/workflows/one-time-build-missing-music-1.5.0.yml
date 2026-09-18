@@ -1,0 +1,33 @@
+name: One-time build Missing Music 1.5.0
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-build-missing-music-1.5.0.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Commit generated package and registry
+        run: |
+          git rm .github/workflows/one-time-build-missing-music-1.5.0.yml
+          git add dist registry.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Build Missing Music 1.5.0"
+          git push origin HEAD:main
