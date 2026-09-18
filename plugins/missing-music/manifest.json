@@ -2,8 +2,8 @@
   "id": "mvbar.missing-music",
   "name": "Missing Music",
   "author": "MVBar",
-  "version": "1.7.0",
-  "description": "Use Deezer to find missing albums and songs, import curated playlists with artwork, detect incomplete local albums, manage requests, and optionally stage exact Deezer items automatically.",
+  "version": "1.8.0",
+  "description": "Use Deezer to find missing albums and songs, import curated playlists with artwork, detect incomplete local albums, manage requests, and safely stage exact Deezer items.",
   "homepage": "https://github.com/mariof1/mvbar-plugins/tree/main/plugins/missing-music",
   "config": {
     "schema": {
@@ -47,8 +47,8 @@
         },
         "musicBrainzContact": {
           "type": "string",
-          "title": "MusicBrainz contact",
-          "description": "Optional contact email or URL included in the MusicBrainz User-Agent. MVBar uses its project URL when left blank."
+          "title": "Legacy MusicBrainz contact",
+          "description": "Optional contact email or URL used only by legacy MusicBrainz compatibility paths. Deezer is the primary catalog and does not require this setting."
         },
         "releaseGroupTypes": {
           "type": "string",
@@ -59,25 +59,34 @@
         "excludedSecondaryTypes": {
           "type": "string",
           "title": "Exclude release variants",
-          "description": "Comma-separated Deezer-derived release variants to hide. Common values include Compilation,Live,Remix,Soundtrack.",
-          "default": "Compilation,Live,Remix,DJ-mix,Mixtape/Street,Interview,Audio drama,Spokenword,Soundtrack,Audiobook,Demo"
+          "description": "Comma-separated Deezer-derived release variants to hide. Supported values currently include Compilation, Live, Remix, and Soundtrack.",
+          "default": "Compilation,Live,Remix,Soundtrack"
         }
       }
     }
   },
   "permissions": {
     "config": {
-      "reason": "Read the administrator-supplied request-provider and MusicBrainz settings."
+      "reason": "Read Missing Music settings for Deezer staging, approval, release filtering, and the optional external request provider."
     },
     "kvstore": {
-      "reason": "Cache MusicBrainz catalog responses to respect its public API rate limit.",
+      "reason": "Store saved Deezer artist mappings and compatibility cache entries.",
       "maxSize": "32 MB"
     },
     "catalog": {
-      "reason": "Read MusicBrainz identifiers and titles from enabled MVBar music libraries for comparison."
+      "reason": "Read metadata from enabled MVBar music libraries to determine which Deezer albums and tracks are already present."
     },
     "requests": {
-      "reason": "Store request state and hand approved metadata-only requests to the configured external service."
+      "reason": "Create and manage Missing Music request records, including hidden batch items used by Deezer playlist imports."
+    },
+    "playlists": {
+      "reason": "Create and populate user-owned MVBar playlists from imported Deezer playlists."
+    },
+    "staging": {
+      "reason": "Download and stage Deezer media in the server-configured Missing Music staging library."
+    },
+    "libraryAccess": {
+      "reason": "Grant the requesting user access to the Missing Music staging library so imported tracks can appear in their library and playlists."
     }
   },
   "mvbar": {
