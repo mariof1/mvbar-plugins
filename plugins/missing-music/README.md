@@ -39,6 +39,8 @@ Open **Missing Music** and search for a local or Deezer artist. Choose the corre
 
 Open **Missing Music → Deezer Playlists** to browse featured Deezer playlists or search by name, for example **Vitamin D**. Results appear as compact artwork cards showing the playlist name, creator, and track count.
 
+Click a playlist artwork card to **preview its full Deezer track list** before importing. The preview modal shows track position, title, artist, album, duration, and provides the same Import/Open controls without leaving the playlist browser.
+
 Selecting **Import playlist** creates a normal MVBar playlist for the current user with the same name and Deezer artwork. MVBar reuses matching tracks that are already in an accessible local library and stages only the missing tracks. Downloaded tracks still live in the normal Missing Music staging layout under their own **Artist/Album/** folders; no playlist-specific media folder is created.
 
 The import runs as a durable background job and resumes after server restarts. The Missing Music page shows live **added/total** progress, while the normal **Playlists** page displays the Deezer artwork and fills in tracks as they are discovered by the library scanner. Repeated tracks in the source Deezer playlist are deduplicated because MVBar playlists store each track once. Imports currently support up to 1,000 Deezer tracks.
