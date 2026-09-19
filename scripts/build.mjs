@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ZipArchive } from 'archiver';
@@ -23,8 +24,11 @@ const inertWasm = Buffer.from([
 ]);
 
 async function buildPackage(directory, outputFilename) {
-  const manifestBuffer = await fs.readFile(path.join(directory, 'manifest.json'));
-  const manifest = JSON.parse(manifestBuffer.toString('utf8'));
+  const manifest = JSON.parse(await fs.readFile(path.join(directory, 'manifest.json'), 'utf8'));
+  // Git may check JSON files out with CRLF on Windows. Normalize the bytes that
+  // enter the archive so an unchanged plugin has the same package checksum on
+  // every build host.
+  const manifestBuffer = Buffer.from(`${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
   let wasm;
   try {
     wasm = await fs.readFile(path.join(directory, 'plugin.wasm'));
@@ -94,4 +98,5 @@ const registry = {
   repository: 'https://github.com/mariof1/mvbar-plugins',
   plugins: registryPlugins,
 };
-await fs.writeFile(path.join(root, 'registry.json'), `${JSON.stringify(registry, null, 2)}\n`);
+const registryText = `${JSON.stringify(registry, null, 2)}\n`.replaceAll('\n', os.EOL);
+await fs.writeFile(path.join(root, 'registry.json'), registryText);
